@@ -30,6 +30,10 @@ jobs:
           persist-credentials: false
 
       - uses: pnpm/action-setup@v6
+        with:
+          # defaults.run.working-directory does not apply to `uses`
+          # steps, so point the action at the real package.json.
+          package_json_file: node/package.json
 
       - uses: actions/setup-node@v7
         with:
