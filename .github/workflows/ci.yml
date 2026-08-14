@@ -17,18 +17,21 @@ jobs:
     defaults:
       run:
         working-directory: node
+    strategy:
+      fail-fast: false
+      matrix:
+        # Floor and current, to keep the engines claim honest.
+        node-version: [20, 22, 24]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
-      - uses: pnpm/action-setup@v4
-        with:
-          version: 9
+      - uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
-          node-version: 20
+          node-version: ${{ matrix.node-version }}
 
       - run: pnpm install --frozen-lockfile
       - run: pnpm run typecheck
@@ -55,11 +58,11 @@ jobs:
         # Floor and current, to keep the requires-python claim honest.
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
 

@@ -4,7 +4,7 @@ Official Node.js client for the [PDFGlyph API](https://pdfglyph.com) — render 
 and CSS to pixel-perfect PDFs, or full-page screenshots, with one API call.
 
 Ships both ESM and CommonJS builds with TypeScript types. No runtime dependencies.
-Requires Node 18 or newer (it uses the global `fetch`).
+Requires Node 20 or newer (it uses the global `fetch`).
 
 ## Installation
 
