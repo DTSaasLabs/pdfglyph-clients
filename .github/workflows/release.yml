@@ -51,9 +51,12 @@ jobs:
             exit 1
           fi
 
+      # Publish with npm, not pnpm: setup-node writes an .npmrc and points
+      # NPM_CONFIG_USERCONFIG at it, which npm honours on publish but pnpm
+      # does not reliably (pnpm whoami authenticates, pnpm publish 404s).
       # prepublishOnly runs clean + build + test, so a failing test blocks release.
       - name: Publish to npm
-        run: pnpm publish --access public --provenance --no-git-checks
+        run: npm publish --access public --provenance --loglevel verbose
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
