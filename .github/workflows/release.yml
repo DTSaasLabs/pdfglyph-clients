@@ -2,7 +2,7 @@ name: Release
 
 # Tag-driven publishing, one tag prefix per package so the two clients
 # version and ship independently:
-#   client-node-v1.0.0    -> @pdfglyph/client on npm
+#   client-node-v1.0.0    -> pdfglyph-client on npm
 #   client-python-v1.0.0  -> pdfglyph on PyPI
 on:
   push:

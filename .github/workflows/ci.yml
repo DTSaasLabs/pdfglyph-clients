@@ -48,8 +48,8 @@ jobs:
           cd /tmp
           echo '{"name":"lt","version":"1.0.0"}' > package.json
           npm install ./pdfglyph-client-*.tgz --silent
-          node -e 'const m=require("@pdfglyph/client"); if(typeof m.PDFGlyph!=="function") process.exit(1)'
-          node --input-type=module -e 'import {PDFGlyph} from "@pdfglyph/client"; if(typeof PDFGlyph!=="function") process.exit(1)'
+          node -e 'const m=require("pdfglyph-client"); if(typeof m.PDFGlyph!=="function") process.exit(1)'
+          node --input-type=module -e 'import {PDFGlyph} from "pdfglyph-client"; if(typeof PDFGlyph!=="function") process.exit(1)'
 
   python:
     runs-on: ubuntu-latest

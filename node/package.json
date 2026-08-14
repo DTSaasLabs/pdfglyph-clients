@@ -1,5 +1,5 @@
 {
-  "name": "@pdfglyph/client",
+  "name": "pdfglyph-client",
   "version": "1.0.0",
   "packageManager": "pnpm@10.33.0",
   "description": "Official Node.js client for the PDFGlyph API \u2014 render HTML and CSS to pixel-perfect PDFs with one API call.",
@@ -54,7 +54,6 @@
     "url": "https://github.com/DTSaasLabs/pdfglyph-clients/issues"
   },
   "publishConfig": {
-    "access": "public",
     "provenance": true
   },
   "keywords": [

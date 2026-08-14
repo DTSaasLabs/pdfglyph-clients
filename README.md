@@ -5,7 +5,7 @@ and CSS to pixel-perfect PDFs, or full-page PNG/JPEG screenshots, with one API c
 
 | Language | Package | Directory |
 | --- | --- | --- |
-| Node.js | [`@pdfglyph/client`](https://www.npmjs.com/package/@pdfglyph/client) | [`node/`](node) |
+| Node.js | [`pdfglyph-client`](https://www.npmjs.com/package/pdfglyph-client) | [`node/`](node) |
 | Python | [`pdfglyph`](https://pypi.org/project/pdfglyph/) | [`python/`](python) |
 
 Both are thin wrappers over a plain HTTP API. You never need them — every endpoint
@@ -22,7 +22,7 @@ prefixed `pk_test_` or `pk_live_`.
 ## Quick look
 
 ```javascript
-import { PDFGlyph } from "@pdfglyph/client";
+import { PDFGlyph } from "pdfglyph-client";
 
 const client = new PDFGlyph(process.env.PDFGLYPH_API_KEY);
 const { pdf } = await client.renderSync({ html: "<h1>Hello, PDF!</h1>" });
@@ -50,7 +50,7 @@ For questions about the API, billing, or the service, use the support channels o
 Each package versions and ships independently, driven by a tag prefix:
 
 ```
-client-node-v1.0.0     -> publishes @pdfglyph/client to npm
+client-node-v1.0.0     -> publishes pdfglyph-client to npm
 client-python-v1.0.0   -> publishes pdfglyph to PyPI
 ```
 

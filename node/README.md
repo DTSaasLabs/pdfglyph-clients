@@ -1,4 +1,4 @@
-# @pdfglyph/client
+# pdfglyph-client
 
 Official Node.js client for the [PDFGlyph API](https://pdfglyph.com) — render HTML
 and CSS to pixel-perfect PDFs, or full-page screenshots, with one API call.
@@ -9,7 +9,7 @@ Requires Node 20 or newer (it uses the global `fetch`).
 ## Installation
 
 ```bash
-npm install @pdfglyph/client
+npm install pdfglyph-client
 ```
 
 ## Getting an API key
@@ -21,7 +21,7 @@ create a key in the dashboard. Keys are prefixed `pk_test_` or `pk_live_`.
 ## Quick start
 
 ```javascript
-import { PDFGlyph } from "@pdfglyph/client";
+import { PDFGlyph } from "pdfglyph-client";
 import fs from "node:fs";
 
 const client = new PDFGlyph(process.env.PDFGLYPH_API_KEY);
@@ -42,7 +42,7 @@ const bytes = await client.downloadPdf(job.jobId);
 CommonJS works too:
 
 ```javascript
-const { PDFGlyph } = require("@pdfglyph/client");
+const { PDFGlyph } = require("pdfglyph-client");
 ```
 
 ## Screenshots
@@ -79,7 +79,7 @@ Any non-2xx response throws a `PDFGlyphError` carrying the server's message and 
 HTTP status:
 
 ```javascript
-import { PDFGlyphError } from "@pdfglyph/client";
+import { PDFGlyphError } from "pdfglyph-client";
 
 try {
   await client.renderSync({ html });
