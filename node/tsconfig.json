@@ -1,0 +1,9 @@
+{
+  // Editor + test config. Published artifacts are built by
+  // tsconfig.esm.json and tsconfig.cjs.json (see "build" in package.json).
+  "extends": "./tsconfig.esm.json",
+  "compilerOptions": {
+    "noEmit": true
+  },
+  "include": ["src", "scripts"]
+}

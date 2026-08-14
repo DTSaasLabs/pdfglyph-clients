@@ -1,0 +1,68 @@
+{
+  "name": "@pdfglyph/client",
+  "version": "1.0.0",
+  "description": "Official Node.js client for the PDFGlyph API — render HTML and CSS to pixel-perfect PDFs with one API call.",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/index.d.ts",
+        "default": "./dist/esm/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.esm.json && tsc -p tsconfig.cjs.json && node scripts/postbuild.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "pnpm run clean && pnpm run build && pnpm run test"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.2.4"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "DTSaasLabs",
+  "homepage": "https://pdfglyph.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DTSaasLabs/pdfglyph-clients.git",
+    "directory": "node"
+  },
+  "bugs": {
+    "url": "https://github.com/DTSaasLabs/pdfglyph-clients/issues"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "keywords": [
+    "pdf",
+    "html-to-pdf",
+    "pdf-generation",
+    "screenshot",
+    "pdfglyph",
+    "api",
+    "sdk"
+  ]
+}

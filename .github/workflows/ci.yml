@@ -1,0 +1,68 @@
+name: CI
+
+# GitHub-hosted runners only. This repository is public, so a self-hosted
+# runner would let a fork's pull request execute arbitrary code on our
+# hardware.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  node:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: node
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run typecheck
+      - run: pnpm test
+      - run: pnpm run build
+
+      - name: Verify both module systems load from the packed tarball
+        run: |
+          pnpm pack --pack-destination /tmp
+          cd /tmp
+          echo '{"name":"lt","version":"1.0.0"}' > package.json
+          npm install ./pdfglyph-client-*.tgz --silent
+          node -e 'const m=require("@pdfglyph/client"); if(typeof m.PDFGlyph!=="function") process.exit(1)'
+          node --input-type=module -e 'import {PDFGlyph} from "@pdfglyph/client"; if(typeof PDFGlyph!=="function") process.exit(1)'
+
+  python:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: python
+    strategy:
+      fail-fast: false
+      matrix:
+        # Floor and current, to keep the requires-python claim honest.
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m pytest tests -q
