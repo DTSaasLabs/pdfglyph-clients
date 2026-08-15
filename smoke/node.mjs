@@ -13,7 +13,7 @@ import { PDFGlyph, PDFGlyphError } from "../node/dist/esm/index.js";
 const apiKey = process.env.PDFGLYPH_TEST_KEY;
 // `||` not `??`: an unset GitHub Actions variable arrives as an empty string,
 // which `??` would happily pass through as the base URL.
-const baseUrl = process.env.PDFGLYPH_BASE_URL || "https://api.pdfglyph.com";
+const baseUrl = process.env.PDFGLYPH_BASE_URL || "https://pdfglyph.com";
 
 if (!apiKey) {
   console.error("PDFGLYPH_TEST_KEY is not set");

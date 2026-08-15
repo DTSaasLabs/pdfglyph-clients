@@ -96,7 +96,7 @@ try {
 ### `new PDFGlyph(apiKey, options?)`
 
 - `apiKey` — your API key (`pk_live_*` or `pk_test_*`)
-- `options.baseUrl` — override the API base URL (default `https://api.pdfglyph.com`)
+- `options.baseUrl` — override the API base URL (default `https://pdfglyph.com`)
 
 ### Methods
 

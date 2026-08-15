@@ -89,7 +89,7 @@ except PDFGlyphError as err:
 
 ## API reference
 
-### `PDFGlyph(api_key, base_url="https://api.pdfglyph.com", timeout=60.0, transport=None)`
+### `PDFGlyph(api_key, base_url="https://pdfglyph.com", timeout=60.0, transport=None)`
 
 `transport` accepts any `httpx.BaseTransport`, which makes the client easy to stub
 in tests with `httpx.MockTransport`.

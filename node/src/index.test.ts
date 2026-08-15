@@ -43,6 +43,18 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
+describe("default base URL", () => {
+  // Regression: 1.0.0 shipped defaulting to https://api.pdfglyph.com, a host
+  // with no DNS record, so every install failed on the first call.
+  it("targets the host that actually serves the API", async () => {
+    stubFetch(json({ jobId: "j", status: "queued" }, 202));
+
+    await new PDFGlyph(API_KEY).render({ html: "<h1>x</h1>" });
+
+    expect(calls[0].url).toBe("https://pdfglyph.com/v1/render");
+  });
+});
+
 describe("render", () => {
   it("posts to /v1/render with the bearer token", async () => {
     stubFetch(json({ jobId: "job_1", status: "queued" }, 202));

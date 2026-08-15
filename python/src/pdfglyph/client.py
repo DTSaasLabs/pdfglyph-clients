@@ -79,7 +79,7 @@ class PDFGlyph:
     def __init__(
         self,
         api_key: str,
-        base_url: str = "https://api.pdfglyph.com",
+        base_url: str = "https://pdfglyph.com",
         timeout: float = 60.0,
         transport: Optional[httpx.BaseTransport] = None,
     ):

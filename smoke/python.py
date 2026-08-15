@@ -14,7 +14,7 @@ import sys
 from pdfglyph import PDFGlyph, PDFGlyphError
 
 api_key = os.environ.get("PDFGLYPH_TEST_KEY")
-base_url = os.environ.get("PDFGLYPH_BASE_URL") or "https://api.pdfglyph.com"
+base_url = os.environ.get("PDFGLYPH_BASE_URL") or "https://pdfglyph.com"
 
 if not api_key:
     print("PDFGLYPH_TEST_KEY is not set", file=sys.stderr)

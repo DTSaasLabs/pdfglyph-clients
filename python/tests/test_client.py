@@ -196,6 +196,13 @@ def test_wait_for_completion_times_out() -> None:
     assert excinfo.value.status_code == 408
 
 
+def test_default_base_url_targets_the_real_api_host() -> None:
+    """Regression: 1.0.0 defaulted to api.pdfglyph.com, which has no DNS record."""
+    client = PDFGlyph(API_KEY)
+    assert client.base_url == "https://pdfglyph.com"
+    client.close()
+
+
 def test_base_url_trailing_slash_is_stripped() -> None:
     client = PDFGlyph(API_KEY, base_url="https://api.example.com/")
     assert client.base_url == "https://api.example.com"

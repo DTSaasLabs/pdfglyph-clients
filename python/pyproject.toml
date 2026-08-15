@@ -1,6 +1,6 @@
 [project]
 name = "pdfglyph"
-version = "1.0.0"
+version = "1.0.1"
 description = "Official Python client for the PDFGlyph API — render HTML and CSS to pixel-perfect PDFs with one API call."
 readme = "README.md"
 requires-python = ">=3.9"

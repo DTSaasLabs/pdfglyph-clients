@@ -60,7 +60,7 @@ export class PDFGlyph {
 
   constructor(apiKey: string, options?: PDFGlyphOptions) {
     this.apiKey = apiKey;
-    this.baseUrl = options?.baseUrl ?? "https://api.pdfglyph.com";
+    this.baseUrl = options?.baseUrl ?? "https://pdfglyph.com";
   }
 
   private async send(
