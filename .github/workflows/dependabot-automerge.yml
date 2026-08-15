@@ -1,0 +1,38 @@
+name: Dependabot auto-merge
+
+# Patch and minor bumps merge themselves once CI is green, so the PR list stays
+# short and the packages stay current without manual babysitting. Major bumps
+# are left alone deliberately — those are decisions, not chores.
+#
+# This enables GitHub's auto-merge rather than merging directly, so the branch
+# protection rule requiring `ci-ok` still has to pass first.
+on: pull_request_target
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  automerge:
+    if: github.actor == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch update metadata
+        id: meta
+        uses: dependabot/fetch-metadata@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge for patch and minor
+        if: |
+          steps.meta.outputs.update-type == 'version-update:semver-patch' ||
+          steps.meta.outputs.update-type == 'version-update:semver-minor'
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Note majors for review
+        if: steps.meta.outputs.update-type == 'version-update:semver-major'
+        run: |
+          echo "::notice::Major bump (${{ steps.meta.outputs.dependency-names }}) left for manual review."

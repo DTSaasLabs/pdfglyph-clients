@@ -73,3 +73,17 @@ jobs:
       - run: python -m pip install --upgrade pip
       - run: python -m pip install -e ".[dev]"
       - run: python -m pytest tests -q
+
+  # Single aggregate check so branch protection can require one name instead of
+  # every matrix leg. Dependabot auto-merge waits on this.
+  ci-ok:
+    if: always()
+    needs: [node, python]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify all matrix jobs succeeded
+        run: |
+          echo "node:   ${{ needs.node.result }}"
+          echo "python: ${{ needs.python.result }}"
+          [ "${{ needs.node.result }}" = "success" ] || exit 1
+          [ "${{ needs.python.result }}" = "success" ] || exit 1

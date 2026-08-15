@@ -1,0 +1,79 @@
+name: Live smoke
+
+# Drives both clients against the deployed API with a pk_test_ key, which
+# returns static production-shaped responses (no quota, no renders).
+#
+# This catches deploy-level breakage that the mocked unit tests cannot see:
+# routing changes, auth changes, TLS, and response-shape drift. It does NOT
+# cover the sync path, download, or screenshots — test keys do not reach those
+# routes. Those are covered by the public-contract snapshot test in the
+# service repo.
+on:
+  schedule:
+    # 07:13 UTC — off the hour so we are not in the herd at :00.
+    - cron: "13 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Is the test key configured?
+        id: guard
+        env:
+          PDFGLYPH_TEST_KEY: ${{ secrets.PDFGLYPH_TEST_KEY }}
+        run: |
+          if [ -z "$PDFGLYPH_TEST_KEY" ]; then
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::PDFGLYPH_TEST_KEY is not set — skipping the live smoke test."
+          else
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: pnpm/action-setup@v6
+        if: steps.guard.outputs.configured == 'true'
+        with:
+          package_json_file: node/package.json
+
+      - uses: actions/setup-node@v7
+        if: steps.guard.outputs.configured == 'true'
+        with:
+          node-version: 20
+
+      - uses: actions/setup-python@v6
+        if: steps.guard.outputs.configured == 'true'
+        with:
+          python-version: "3.12"
+
+      - name: Build the Node client
+        if: steps.guard.outputs.configured == 'true'
+        working-directory: node
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm run build
+
+      - name: Install the Python client
+        if: steps.guard.outputs.configured == 'true'
+        working-directory: python
+        run: python -m pip install -e .
+
+      - name: Smoke — Node
+        if: steps.guard.outputs.configured == 'true'
+        env:
+          PDFGLYPH_TEST_KEY: ${{ secrets.PDFGLYPH_TEST_KEY }}
+          PDFGLYPH_BASE_URL: ${{ vars.PDFGLYPH_BASE_URL }}
+        run: node smoke/node.mjs
+
+      - name: Smoke — Python
+        if: steps.guard.outputs.configured == 'true'
+        env:
+          PDFGLYPH_TEST_KEY: ${{ secrets.PDFGLYPH_TEST_KEY }}
+          PDFGLYPH_BASE_URL: ${{ vars.PDFGLYPH_BASE_URL }}
+        run: python smoke/python.py
