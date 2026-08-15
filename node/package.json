@@ -2,7 +2,7 @@
   "name": "pdfglyph-client",
   "version": "1.0.1",
   "packageManager": "pnpm@10.33.0",
-  "description": "Official Node.js client for the PDFGlyph API \u2014 render HTML and CSS to pixel-perfect PDFs with one API call.",
+  "description": "Official Node.js client for the PDFGlyph API — render HTML and CSS to pixel-perfect PDFs with one API call.",
   "type": "module",
   "main": "./dist/cjs/index.js",
   "module": "./dist/esm/index.js",
@@ -33,10 +33,9 @@
     "clean": "rm -rf dist",
     "prepublishOnly": "pnpm run clean && pnpm run build && pnpm run test"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "typescript": "^5.7.0",
+    "@types/node": "^26.2.0",
+    "typescript": "^5.9.3",
     "vitest": "^4.1.10"
   },
   "engines": {
